@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ScraperSchema } from './scraper/scraper.schema';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { DataModule } from './scraper/scraper.module'; // Asegúrate de ajustar el path
+import { DataModule } from './scraper/scraper.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 
