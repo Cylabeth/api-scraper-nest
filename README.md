@@ -1,73 +1,69 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+<h1 align="center">API Scraper NestJS
+</h1>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
+  <p align="center">Este proyecto es una API REST construida con NestJS que realiza web scraping a páginas seleccionadas por el usuario y almacena los datos recogidos en una base de datos MongoDB.</p>
     <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Requisitos
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Para ejecutar este proyecto necesitarás:
 
-## Installation
+- Nest.js
+- Docker
+- MongoDB
+- Puppeteer (para el web scraping)
+
+## Configuración
+
+1. Clona este repositorio en tu máquina local:
 
 ```bash
+$ git clone https://github.com/Cylabeth/api-scraper-nest
+```
+
+2. Navega a la carpeta del proyecto y instala las dependencias:
+```bash
+$ cd api-scraper-nest
 $ npm install
 ```
-
-## Running the app
-
+3. Configura tu base de datos MongoDB ejecutando un contenedor de Docker:
 ```bash
-# development
+$ export MONGODB_VERSION=5.0.1-ubi8
+$ docker run --name tu-contenedor -d -p 27017:27017 -v $(pwd)/data:/data/db -e MONGO_INITDB_ROOT_USERNAME=tu-usuario -e MONGO_INITDB_ROOT_PASSWORD=tu-password mongodb/mongodb-community-server:$MONGODB_VERSION
+```
+4. Asegúrate de configurar tus variables de entorno en un archivo .env basado en el archivo .env.example proporcionado en este repositorio. Ajusta las variables de usuario y contraseña de la DB según las hayas definido.
+
+5. Inicia la aplicación:
+```bash
 $ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Test
+## Uso
 
+La API consta de tres endpoints:
+
+<strong>/scraper/scrape?url=< URL ></strong> - Realiza el web scraping de la URL especificada y guarda los resultados en la DB.
+
+<strong>/scraper/data</strong> - Lista todas las URLs y sus datos relacionados (previamente almacenados en la DB).
+
+<strong>/scraper/fetch?url=< URL ></strong> - Recupera la información almacenada en la DB de la URL solicitada.
+
+
+## Ejemplos
+
+Realizar web scraping y almacenar datos:
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ curl -X GET 'http://localhost:3000/scraper/scrape?url=https://www.example.com'
 ```
 
-## Support
+Listar todas las URL's guardadas
+```bash
+curl -X GET 'http://localhost:3000/scraper/data'
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Obtener datos de una URL específica
+```bash
+curl -X GET 'http://localhost:3000/scraper/fetch?url=https://www.example.com
+```
 
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
