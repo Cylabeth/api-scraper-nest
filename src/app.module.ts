@@ -20,8 +20,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
           }),
           inject: [ConfigService],
         }),
-        MongooseModule.forRoot('mongodb://glue:gluetech@localhost:27017/admin'),
-        MongooseModule.forFeature([{ name: 'Data', schema: ScraperSchema }]),
         MongooseModule.forFeature([{ name: 'Data', schema: ScraperSchema }]),
         DataModule,
   ],
