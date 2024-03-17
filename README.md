@@ -9,6 +9,7 @@
 
 Para ejecutar este proyecto necesitarás:
 
+- Node.js
 - Nest.js
 - Docker
 - MongoDB
