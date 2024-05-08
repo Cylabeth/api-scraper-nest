@@ -23,7 +23,7 @@ Para ejecutar este proyecto necesitarás:
 $ git clone https://github.com/Cylabeth/api-scraper-nest
 ```
 
-2. Navega a la carpeta del proyecto y instala las dependencias:
+2. Navega a la carpeta del proyecto e instala las dependencias:
 ```bash
 $ cd api-scraper-nest
 $ npm install
